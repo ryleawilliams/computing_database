@@ -1,0 +1,19 @@
+---
+title: "SQL Project"
+author: "Riley Bagwell"
+date: "4/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(RSQLite)
+newdb <- dbConnect(SQLite(), dbname="Specimen_Catalog.db")
+```
+
+```{sql connection=newdb}
+CREATE TABLE Specimens(
+name,
+time_period,
+location,
+)
+```
