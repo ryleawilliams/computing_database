@@ -17,7 +17,7 @@ time_period,
 location,
 class_used_for,
 sex,
-date_added
+date_added,
 )
 ```
 
