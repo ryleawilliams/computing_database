@@ -15,5 +15,9 @@ CREATE TABLE Specimens(
 name,
 time_period,
 location,
+class_used_for,
+sex,
 )
 ```
+
+
