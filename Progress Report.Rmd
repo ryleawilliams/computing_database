@@ -11,3 +11,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 For this project we have decided to make a database to catalog the specimens in the Wood Science Building. To do so a .db file was created and was used as the connection for the code written to start a table. The table wil include information describing the name, location, time period, sex, the class the specimen is needed for, and the date added to the table. Our goal for the next step of the coding is to be able to input data into the table, and to add queries to pull up specific data when needed. The queries that are hoped to include are to find specimens by name, possibly to look up information based on the class the specimen is used for, and to look up specimens based on their time periods that they came from.
 
+The following code has been generated:
+
+```{r setup, include=FALSE}
+library(RSQLite)
+newdb <- dbConnect(SQLite(), dbname="Specimen_Catalog.db")
+```
+
+```{sql connection=newdb}
+CREATE TABLE Specimens(
+name,
+time_period,
+location,
+class_used_for,
+sex,
+date_added,
+)
+```
