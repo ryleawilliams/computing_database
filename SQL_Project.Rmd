@@ -92,6 +92,62 @@ Date_Aquired DATE
 ```
 
 ```{sql connection=newdb}
+CREATE TABLE Specimens_4(
+Specimen_ID VARCHAR(20) PRIMARY KEY,
+Specimen_name VARCHAR(20) NOT NULL,
+Kingdom_ID INTEGER REFERENCES Kingdom,
+Phylum_ID INTEGER REFERENCES Phylum,
+Class_ID INTEGER REFERENCES Class,
+Order_ID INTEGER REFERENCES Orders,
+Family_ID INTEGER REFERENCES Family,
+Genus_ID INTEGER REFERENCES Genus,
+Species_ID INTEGER REFERENCES Species,
+Storage_Location_ID INTEGER REFERENCES Storage_Location,
+Date_Aquired DATE, 
+CONSTRAINT 'date_aquired_check' CHECK (('Date_Aquired' <= DATE('now')))
+)
+```
+
+```{sql connection=newdb}
+INSERT INTO Specimens_2 SELECT * FROM Specimens
+```
+
+```{sql connection=newdb}
+INSERT INTO Specimens_4 (Specimen_ID, Specimen_name, Kingdom_ID, Phylum_ID, Class_ID, Order_ID, Family_ID, Genus_ID, Species_ID, Storage_Location_ID, Date_Aquired)
+VALUES("T01", "Tiger", 1, 1, 1, 1, 1, 1, 1, 1, "2024-07-29")
+```
+
+```{sql connection=newdb}
+INSERT INTO Specimens_3 (Specimen_ID, Specimen_name, Kingdom_ID, Phylum_ID, Class_ID, Order_ID, Family_ID, Genus_ID, Species_ID, Storage_Location_ID, Date_Aquired)
+VALUES("T02", "Tiger", 1, 1, 1, 1, 1, 1, 1, 1, "2024-07-29")
+```
+
+```{sql connection=newdb}
+SELECT * FROM Specimens_3
+
+```
+
+```{sql connection=newdb}
+SELECT * FROM Specimens_2
+```
+
+```{sql connection=newdb}
+DROP TABLE Specimens
+```
+
+```{sql connection=newdb}
+SELECT * FROM Specimens
+```
+
+```{sql connection=newdb}
+ALTER TABLE Specimens_2 RENAME TO Specimens
+```
+
+```{sql connection=newdb}
+SELECT * FROM Specimens
+```
+
+```{sql connection=newdb}
 INSERT INTO Kingdom (Kingdom_ID, Kingdom_Description)
 VALUES(1, "Animals"), (2, "Plants"), (3, "Protists")
 ```
@@ -150,6 +206,20 @@ VALUES(3, 1, "201A", 2), (2, 1, "118", 1)
 ```
 
 ```{sql connection=newdb}
+UPDATE Storage_Location SET Room= "117" WHERE Storage_Location_ID = 3
+```
+
+```{sql connection=newdb}
+SELECT * FROM Storage_Location
+```
+
+
+```{sql connection=newdb}
+INSERT INTO Storage_Location(Storage_Location_ID, Building_ID, Room, Floor)
+VALUES(1, 1, "201A", 2)
+```
+
+```{sql connection=newdb}
 INSERT INTO Specimens (Specimen_ID, Specimen_name, Kingdom_ID, Phylum_ID, Class_ID, Order_ID, Family_ID, Genus_ID, Species_ID, Storage_Location_ID, Date_Aquired)
 VALUES("T01", "Tiger", 1, 1, 1, 1, 1, 1, 1, 1, "1999-07-29")
 ```
@@ -160,6 +230,15 @@ VALUES("S01", "Scorpion", 1, 2, 2, 2, 2, 2, 2, 1, "2019-03-07"), ("O01", "Octopu
 ```
 
 ```{sql connection=newdb}
+INSERT INTO Specimens (Specimen_ID, Specimen_name, Kingdom_ID, Phylum_ID, Class_ID, Order_ID, Family_ID, Genus_ID, Species_ID, Storage_Location_ID, Date_Aquired)
+VALUES("T02", "Tiger_2", 1, 1, 1, 1, 1, 1, 1, 1, "2022-07-29")
+```
+
+```{sql connection=newdb}
+DELETE FROM Specimens WHERE Specimen_ID="T02"
+```
+
+```{sql connection=newdb}
 SELECT * FROM Specimens
 ```
 
@@ -167,13 +246,36 @@ SELECT * FROM Specimens
 SELECT * FROM Specimens WHERE Storage_Location_ID = 2
 ```
 
-Need to add a check to the date.
-
 ```{sql connection=newdb}
 SELECT Specimen_name, Kingdom_Description, Phylum_Description, Class_Description, Order_Description, Family_Description, Genus_Description, Species_Description
 FROM Kingdom, Phylum, Class, Orders, Family, Genus, Species
 NATURAL JOIN Specimens
 ```
 
-Need to add location and date to the natural join.
+```{sql connection=newdb}
+SELECT
+Specimens.Specimen_name AS "Specimen Name", 
+Kingdom.Kingdom_Description AS "Kingdom",
+Phylum.Phylum_Description AS "Phylum",
+Class.Class_Description AS "Class",
+Orders.Order_Description AS "Order",
+Family.Family_Description AS "Family",
+Genus.Genus_Description AS "Genus",
+Species.Species_Description AS "Species",
+Building.Building_description AS "Building",
+Storage_location.Room,
+Storage_Location.Floor
+FROM Specimens
+JOIN Kingdom ON Specimens.Kingdom_ID=Kingdom.Kingdom_ID
+JOIN Phylum ON Specimens.Phylum_ID=Phylum.Phylum_ID
+JOIN Class ON Specimens.Class_ID=Class.Class_ID
+JOIN Orders ON Specimens.Order_ID=Orders.Order_ID
+JOIN Family ON Specimens.Family_ID=Family.Family_ID
+JOIN Genus ON Specimens.Genus_ID=Genus.Genus_ID
+JOIN Species ON Specimens.Species_ID=Species.Species_ID
+JOIN Storage_Location ON Specimens.Storage_Location_ID = Storage_Location.Storage_Location_ID
+JOIN Building ON Storage_Location.Building_ID=Building.Building_ID
+```
 
+ 
+ 
