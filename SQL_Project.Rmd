@@ -168,3 +168,12 @@ SELECT * FROM Specimens WHERE Storage_Location_ID = 2
 ```
 
 Need to add a check to the date.
+
+```{sql connection=newdb}
+SELECT Specimen_name, Kingdom_Description, Phylum_Description, Class_Description, Order_Description, Family_Description, Genus_Description, Species_Description
+FROM Kingdom, Phylum, Class, Orders, Family, Genus, Species
+NATURAL JOIN Specimens
+```
+
+Need to add location and date to the natural join.
+
