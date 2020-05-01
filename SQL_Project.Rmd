@@ -11,14 +11,160 @@ newdb <- dbConnect(SQLite(), dbname="Specimen_Catalog.db")
 ```
 
 ```{sql connection=newdb}
-CREATE TABLE Specimens(
-name,
-time_period,
-location,
-class_used_for,
-sex,
-date_added,
+CREATE TABLE Kingdom(
+Kingdom_ID INTEGER PRIMARY KEY,
+Kingdom_Description TEXT NOT NULL
 )
 ```
 
+```{sql connection=newdb}
+CREATE TABLE Phylum(
+Phylum_ID INTEGER PRIMARY KEY,
+Phylum_Description TEXT NOT NULL
+)
+```
 
+```{sql connection=newdb}
+CREATE TABLE Class(
+Class_ID INTEGER PRIMARY KEY,
+Class_Description TEXT NOT NULL
+)
+```
+
+```{sql connection=newdb}
+CREATE TABLE Orders(
+Order_ID INTEGER PRIMARY KEY,
+Order_Description TEXT NOT NULL
+)
+```
+
+```{sql connection=newdb}
+CREATE TABLE Family(
+Family_ID INTEGER PRIMARY KEY,
+Family_Description TEXT NOT NULL
+)
+```
+
+```{sql connection=newdb}
+CREATE TABLE Genus(
+Genus_ID INTEGER PRIMARY KEY,
+Genus_Description TEXT NOT NULL
+)
+```
+
+```{sql connection=newdb}
+CREATE TABLE Species(
+Species_ID INTEGER PRIMARY KEY,
+Species_Description TEXT NOT NULL
+)
+```
+
+```{sql connection=newdb}
+CREATE TABLE Storage_Location(
+Storage_Location_ID INTEGER PRIMARY KEY,
+Building_ID INTEGER NOT NULL REFERENCES Building,
+Room VARCHAR(20) NOT NULL,
+Floor VARCHAR(20) NOT NULL
+)
+```
+
+```{sql connection=newdb}
+CREATE TABLE Building(
+Building_ID INTEGER PRIMARY KEY,
+Building_Description TEXT NOT NULL
+)
+```
+
+```{sql connection=newdb}
+CREATE TABLE Specimens(
+Specimen_ID VARCHAR(20) PRIMARY KEY,
+Specimen_name VARCHAR(20) NOT NULL,
+Kingdom_ID INTEGER REFERENCES Kingdom,
+Phylum_ID INTEGER REFERENCES Phylum,
+Class_ID INTEGER REFERENCES Class,
+Order_ID INTEGER REFERENCES Orders,
+Family_ID INTEGER REFERENCES Family,
+Genus_ID INTEGER REFERENCES Genus,
+Species_ID INTEGER REFERENCES Species,
+Storage_Location_ID INTEGER REFERENCES Storage_Location,
+Date_Aquired DATE
+)
+```
+
+```{sql connection=newdb}
+INSERT INTO Kingdom (Kingdom_ID, Kingdom_Description)
+VALUES(1, "Animals"), (2, "Plants"), (3, "Protists")
+```
+
+```{sql connection=newdb}
+SELECT * FROM Kingdom
+```
+
+```{sql connection=newdb}
+INSERT INTO Kingdom (Kingdom_ID, Kingdom_Description)
+VALUES(4, "Animals")
+```
+
+```{sql connection=newdb}
+UPDATE Kingdom SET Kingdom_Description= "Fungi" WHERE Kingdom_ID = 4
+```
+
+```{sql connection=newdb}
+INSERT INTO Phylum (Phylum_ID, Phylum_Description)
+VALUES(1, "Chordate"), (2, "Arthropoda"), (3, "Mollusca"), (4, "Nematoda")
+```
+
+```{sql connection=newdb}
+INSERT INTO Class (Class_ID, Class_Description)
+VALUES (1,"Mammalia"), (2, "Arachnida"), (3, "Cephalopoda"), (4, "Chromadorea")
+```
+
+```{sql connection=newdb}
+INSERT INTO Orders (Order_ID, Order_description)
+VALUES(1, "Carnivora"), (2, "Scorpiones"), (3, "Octopoda"), (4, "Ascaridida")
+```
+
+```{sql connection=newdb}
+INSERT INTO Family (Family_ID, Family_Description)
+VALUES(1, "Felidae"), (2, "Chactidae"), (3, "Octopodidae"), (4, "Ascarididae")
+```
+
+```{sql connection=newdb}
+INSERT INTO Genus (Genus_ID, Genus_Description)
+VALUES(1, "Panthera"), (2, "Anuroctonus"), (3, "Octopus"), (4, "Ascaris")
+```
+
+```{sql connection=newdb}
+INSERT INTO Species (Species_ID, Species_Description)
+VALUES(1, "tigris"), (2, "pococki"), (3, "vulgaris"), (4, "lumbricoides")
+```
+
+```{sql connection=newdb}
+INSERT INTO Building (Building_ID, Building_Description)
+VALUES(1, "Wood_Science"), (2, "Geiger_Center")
+```
+
+```{sql connection=newdb}
+INSERT INTO Storage_Location(Storage_Location_ID, Building_ID, Room, Floor)
+VALUES(3, 1, "201A", 2), (2, 1, "118", 1)
+```
+
+```{sql connection=newdb}
+INSERT INTO Specimens (Specimen_ID, Specimen_name, Kingdom_ID, Phylum_ID, Class_ID, Order_ID, Family_ID, Genus_ID, Species_ID, Storage_Location_ID, Date_Aquired)
+VALUES("T01", "Tiger", 1, 1, 1, 1, 1, 1, 1, 1, "1999-07-29")
+```
+
+```{sql connection=newdb}
+INSERT INTO Specimens (Specimen_ID, Specimen_name, Kingdom_ID, Phylum_ID, Class_ID, Order_ID, Family_ID, Genus_ID, Species_ID, Storage_Location_ID, Date_Aquired)
+VALUES("S01", "Scorpion", 1, 2, 2, 2, 2, 2, 2, 1, "2019-03-07"), ("O01", "Octopus", 1, 3, 3, 3, 3, 3, 3, 2, "2018-09-18"), ("R01", "Round_Worm", 1, 4, 4, 4, 4, 4, 4, 2, "1998-11-30")
+```
+
+```{sql connection=newdb}
+SELECT * FROM Specimens
+```
+
+```{sql connection=newdb}
+SELECT * FROM Specimens WHERE Storage_Location_ID = 2
+```
+
+Need to add a check to the date.
