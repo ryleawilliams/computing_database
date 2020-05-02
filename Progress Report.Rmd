@@ -15,7 +15,7 @@ The following code has been generated:
 
 ```{r setup, include=FALSE}
 library(RSQLite)
-newdb <- dbConnect(SQLite(), dbname="Specimen_Catalog.db")
+newdb <- dbConnect(SQLite(), dbname="")
 ```
 
 ```{sql connection=newdb}
