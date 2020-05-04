@@ -1,6 +1,6 @@
 ---
 title: "SQL Project"
-author: "Riley Bagwell"
+author: "Riley Bagwell and Rylea Williams"
 date: "4/13/2020"
 output: html_document
 ---
@@ -181,4 +181,16 @@ JOIN Genus ON Specimens.Genus_ID=Genus.Genus_ID
 JOIN Species ON Specimens.Species_ID=Species.Species_ID
 JOIN Storage_Location ON Specimens.Storage_Location_ID = Storage_Location.Storage_Location_ID
 JOIN Building ON Storage_Location.Building_ID=Building.Building_ID
+```
+
+```{sql connection=newdb}
+SELECT * FROM Phylum
+```
+
+```{sql connection=newdb}
+SELECT * FROM Family
+```
+
+```{sql connection=newdb}
+SELECT * FROM Species
 ```
