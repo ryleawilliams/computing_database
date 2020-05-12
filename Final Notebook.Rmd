@@ -216,6 +216,20 @@ JOIN Storage_Location ON Specimens.Storage_Location_ID = Storage_Location.Storag
 JOIN Building ON Storage_Location.Building_ID=Building.Building_ID
 ```
 
+A select statement for the Phylum table was written to check for errors, and show the values were correctly input into the table. 
 
+```{sql connection=newdb}
+SELECT * FROM Phylum
+```
 
+A select statement for the Family table was written to check for errors, and show the values were correctly input into the table.
 
+```{sql connection=newdb}
+SELECT * FROM Family
+```
+
+A select statement for the Species table was written to check for errors, and show the values were correctly input into the table. 
+
+```{sql connection=newdb}
+SELECT * FROM Species
+```
